@@ -1,0 +1,271 @@
+Scale and convert images using PIL
+1 hour 30 minutes
+Free
+Introduction
+Your company is in the process of updating its website, and they've hired a design contractor to create some new icon graphics for the site. But the contractor has delivered the final designs in the wrong format -- rotated 90° and too large. Oof! You're not able to get in contact with the designers and your own deadline is approaching fast. You'll need to use Python to get these images ready for launch.
+
+What you'll do
+Use the Python Imaging Library to do the following to a batch of images:
+
+Open an image
+Rotate an image
+Resize an image
+Save an image in a specific format in a separate directory
+You'll have 90 minutes to complete this lab.
+
+Start the lab
+You'll need to start the lab before you can access the materials in the virtual machine OS. To do this, click the green “Start Lab” button at the top of the screen.
+
+Note: For this lab you are going to access the Linux VM through your local SSH Client, and not use the Google Console (Open GCP Console button is not available for this lab).
+Start Lab
+
+After you click the “Start Lab” button, you will see all the SSH connection details on the left-hand side of your screen. You should have a screen that looks like this:
+
+Connection details
+
+Accessing the virtual machine
+Please find one of the three relevant options below based on your device's operating system.
+
+Note: Working with Qwiklabs may be similar to the work you'd perform as an IT Support Specialist; you'll be interfacing with a cutting-edge technology that requires multiple steps to access, and perhaps healthy doses of patience and persistence(!). You'll also be using SSH to enter the labs -- a critical skill in IT Support that you’ll be able to practice through the labs.
+Option 1: Windows Users: Connecting to your VM
+In this section, you will use the PuTTY Secure Shell (SSH) client and your VM’s External IP address to connect.
+
+Download your PPK key file
+
+You can download the VM’s private key file in the PuTTY-compatible PPK format from the Qwiklabs Start Lab page. Click on Download PPK.
+
+PPK
+
+Connect to your VM using SSH and PuTTY
+
+You can download Putty from here
+
+In the Host Name (or IP address) box, enter username@external_ip_address.
+
+Note: Replace username and external_ip_address with values provided in the lab.
+Putty_1
+
+In the Category list, expand SSH.
+
+Click Auth (don’t expand it).
+
+In the Private key file for authentication box, browse to the PPK file that you downloaded and double-click it.
+
+Click on the Open button.
+
+Note: PPK file is to be imported into PuTTY tool using the Browse option available in it. It should not be opened directly but only to be used in PuTTY.
+Putty_2
+
+Click Yes when prompted to allow a first connection to this remote SSH server. Because you are using a key pair for authentication, you will not be prompted for a password.
+Common issues
+
+If PuTTY fails to connect to your Linux VM, verify that:
+
+You entered <username>@<external ip address> in PuTTY.
+
+You downloaded the fresh new PPK file for this lab from Qwiklabs.
+
+You are using the downloaded PPK file in PuTTY.
+
+Option 2: OSX and Linux users: Connecting to your VM via SSH
+Download your VM’s private key file.
+
+You can download the private key file in PEM format from the Qwiklabs Start Lab page. Click on Download PEM.
+
+PEM
+
+Connect to the VM using the local Terminal application
+
+A terminal is a program which provides a text-based interface for typing commands. Here you will use your terminal as an SSH client to connect with lab provided Linux VM.
+
+Open the Terminal application.
+
+To open the terminal in Linux use the shortcut key Ctrl+Alt+t.
+
+To open terminal in Mac (OSX) enter cmd + space and search for terminal.
+
+Enter the following commands.
+
+Note: Substitute the path/filename for the PEM file you downloaded, username and External IP Address.
+You will most likely find the PEM file in Downloads. If you have not changed the download settings of your system, then the path of the PEM key will be ~/Downloads/qwikLABS-XXXXX.pem
+
+chmod 600 ~/Downloads/qwikLABS-XXXXX.pem
+ssh -i ~/Downloads/qwikLABS-XXXXX.pem username@External Ip Address
+SSH
+
+Option 3: Chrome OS users: Connecting to your VM via SSH
+Note: Make sure you are not in Incognito/Private mode while launching the application.
+Download your VM’s private key file.
+
+You can download the private key file in PEM format from the Qwiklabs Start Lab page. Click on Download PEM.
+
+PEM
+
+Connect to your VM
+
+Add Secure Shell from here to your Chrome browser.
+
+Open the Secure Shell app and click on [New Connection].
+
+new-connection-button
+
+In the username section, enter the username given in the Connection Details Panel of the lab. And for the hostname section, enter the external IP of your VM instance that is mentioned in the Connection Details Panel of the lab.
+
+username-hostname-fields
+
+In the Identity section, import the downloaded PEM key by clicking on the Import… button beside the field. Choose your PEM key and click on the OPEN button.
+
+Note: If the key is still not available after importing it, refresh the application, and select it from the Identity drop-down menu.
+Once your key is uploaded, click on the [ENTER] Connect button below.
+
+import-button
+
+For any prompts, type yes to continue.
+
+You have now successfully connected to your Linux VM.
+
+You're now ready to continue with the lab!
+
+Download the file
+Your design contractor sent you the zipped file through his team drive. Download the file from the drive using the following CURL request:
+
+curl -c ./cookie -s -L "https://drive.google.com/uc?export=download&id=$11hg55-dKdHN63yJP20dMLAgPJ5oiTOHF" > /dev/null | curl -Lb ./cookie "https://drive.google.com/uc?export=download&confirm=`awk '/download/ {print $NF}' ./cookie`&id=11hg55-dKdHN63yJP20dMLAgPJ5oiTOHF" -o images.zip && sudo rm -rf cookie
+Output:
+
+5fe50f874fc9b1f9.png
+
+List files using the command:
+
+ls
+Output:
+
+bfeaf6a7d282dcf5.png
+
+Unzip the file using the following command:
+
+unzip images.zip
+To list images from the images folder use the following command:
+
+ls ~/images
+The images received are in the wrong format:
+
+.tiff format
+Image resolution 192x192 pixel (too large)
+Rotated 90° anti-clockwise
+The images required for the launch should be in this format:
+
+.jpeg format
+
+Image resolution 128x128 pixel
+
+Should be straight
+
+
+command to unzip images:
+
+unzip images.zip
+
+change directory to images:
+
+cd images
+
+Install Pillow
+We should change the format and size of these pictures, and rotate them by 90° clockwise. To do this, we'll use Python Imaging Library (PIL). Install pillow library using the following command:
+
+pip3 install pillow
+Python Imaging Library (known as Pillow in newer versions) is a library in Python that adds support for opening, manipulating, and saving lots of different image file formats.
+
+Pillow offers several standard procedures for image manipulation. These include:
+
+Per-pixel manipulations
+Masking and transparency handling
+Image filtering, such as blurring, contouring, smoothing, or edge finding
+Image enhancing, like sharpening and adjusting brightness, contrast or color
+Adding text to images (and much more!)
+Click Check my progress to verify the objective.
+Install Pillow
+Successfully installed PIL/pillow python library.
+
+Write a Python script
+This is the challenge section of the lab where you'll write a script that uses PIL to perform the following operations:
+
+Iterate through each file in the folder
+For each file:
+Rotate the image 90° clockwise
+Resize the image from 192x192 to 128x128
+Save the image to a new folder in .jpeg format
+Use a nano editor for this purpose. You can name the file however you'd like. And make sure to save the updated images in the folder: /opt/icons/
+
+use command:
+
+nano fix_image.py
+
+use this script:
+
+#!/usr/bin/env python3
+import os, sys
+from PIL import Image
+
+size = (128, 128)
+
+for infile in os.listdir():
+     outfile = os.path.splitext(infile)[0]
+     try:
+         with Image.open(infile).convert('RGB') as im:
+             im.thumbnail(size)
+             im.rotate(270) .save("/opt/icons/" + outfile, "JPEG")
+     except OSError:
+         pass
+
+
+
+You'll use lots of methods from PIL to complete this exercise. You can refer to Pillow for detailed explanations and have a look at the tutorials to help you build the script and complete the task.
+
+To save the file after editing, press Ctrl-O, Enter, and Ctrl-x.
+
+Once your script is ready, grant executable permission to the script file.
+
+chmod +x <script_name>.py
+Replace <script_name> with the name of your script.
+
+in this case, Script name is fix_image
+
+Now, run the file.
+
+./<script_name>.py
+Replace <script_name> with the name of your script.
+
+On a successful run, this should produce images in the right format within the directory: /opt/icons/
+
+To view the updated images use the following command:
+
+ls /opt/icons
+Output:
+
+ea9afeff1183c231.png
+
+To check image properties, use the Python interpreter:
+
+python3
+Once the interactive shell opens, import the Image module from PIL:
+
+from PIL import Image
+Open any image from the folder, or you can use the following image:
+
+img = Image.open("/opt/icons/ic_edit_location_black_48dp")
+To view the format and size of the image:
+
+img.format, img.size
+Output:
+
+b3a2965a9c783ec9.png
+
+Type exit() to exit from the Python interpreter.
+
+Click Check my progress to verify the objective.
+Python script
+
+Congratulations!
+Wow, nice work! You successfully wrote a Python script to manipulate and store a set of images.
+
+End your lab
